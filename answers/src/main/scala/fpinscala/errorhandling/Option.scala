@@ -3,6 +3,9 @@ package fpinscala.errorhandling
 //hide std library `Option` and `Either`, since we are writing our own in this chapter
 import scala.{Option => _, Either => _, _}
 
+case class Some[+A](get: A) extends Option[A]
+case object None extends Option[Nothing]
+
 sealed trait Option[+A] {
   def map[B](f: A => B): Option[B] = this match {
     case None => None
@@ -46,8 +49,6 @@ sealed trait Option[+A] {
   def filter_1(f: A => Boolean): Option[A] =
     flatMap(a => if (f(a)) Some(a) else None)
 }
-case class Some[+A](get: A) extends Option[A]
-case object None extends Option[Nothing]
 
 object Option {
   def failingFn(i: Int): Int = {
